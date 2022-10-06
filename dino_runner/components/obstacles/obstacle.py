@@ -11,7 +11,7 @@ class Obstacle(Sprite):
         self.image_rect.x = SCREEN_WIDTH
 
     def update(self, game):
-        self.image_rect.x -= 15
+        self.image_rect.x -= game
 
     def draw(self, screen):
         screen.blit(self.image[self.type], self.image_rect)
