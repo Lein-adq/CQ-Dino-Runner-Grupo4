@@ -4,13 +4,14 @@ from dino_runner.utils.constants import SCREEN_WIDTH
 
 class Obstacle(Sprite):
 
-    def __init__(self, image):
+    def __init__(self, image, type):
         self.image = image
-        self.image_rect = self.image.get_rect()
+        self.type = type
+        self.image_rect = self.image[self.type].get_rect()
         self.image_rect.x = SCREEN_WIDTH
 
-    def draw(self, screen):
-        screen.blit(self.image, self.image_rect)
+    def update(self, game):
+        self.image_rect.x -= 15
 
-    def update(self):
-        self.image_rect.x -= 20
+    def draw(self, screen):
+        screen.blit(self.image[self.type], self.image_rect)
