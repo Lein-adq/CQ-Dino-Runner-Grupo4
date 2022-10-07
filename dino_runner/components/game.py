@@ -10,6 +10,7 @@ from dino_runner.utils import text_utils
 class Game:
     def __init__(self):
         pygame.init()
+        pygame.mixer.init()
         pygame.display.set_caption(TITLE)
         pygame.display.set_icon(ICON)
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -25,10 +26,12 @@ class Game:
         self.y_pos_bg = 380
         self.death_count = 0
         self.points = 0
+        self.music = 0
 
     def run(self):
         # Game loop: events - update - draw
         self.reset_attributes()
+        self.play_music()
         while self.playing:
             self.events()
             self.update()
@@ -39,9 +42,12 @@ class Game:
     def reset_attributes(self):
         self.playing = True
         self.death_count = 0
+        self.music = 1
         self.points = 0
         self.game_speed = 15
+
     def execute(self):
+        self.play_music()
         while self.game_running:
             if not self.playing:
                 self.show_menu()
@@ -62,10 +68,10 @@ class Game:
         self.screen.fill((255, 255, 255))
         self.draw_background()
         self.score()
+        self.lives_remain()
         self.dino.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.cloud.draw(self.screen)
-        # self.heart.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
 
@@ -73,9 +79,8 @@ class Game:
         self.points += 1
         if self.points % 100 == 0:
             self.game_speed += 1
-        text, text_rect = text_utils.get_score_element(self.points)
+        text, text_rect = text_utils.get_score_element(self.points, "assets/fonts/pixelfont.ttf")
         self.screen.blit(text, text_rect)
-        # print("Points: ", self.points)
 
     def draw_background(self):
         image_width = BG.get_width()
@@ -92,8 +97,8 @@ class Game:
         self.show_menu_options()
 
         pygame.display.update()
+
         self.handle_events_menu()
-        # pygame.time.delay(1000)
 
     def handle_events_menu(self):
         for event in pygame.event.get():
@@ -107,18 +112,35 @@ class Game:
                 exit()
 
     def show_menu_options(self):
-        message = "Welcome to Dino Runner Game" if self.death_count <= 0 else "GAME OVER"
+        message = "WELCOME TO DINO RUNNER GAME!!" if self.death_count <= 0 else "GAME OVER"
         text, text_rect = text_utils.get_centered_message(message, font_size=30)
         self.screen.blit(text, text_rect)
-        pos_y = (SCREEN_HEIGHT//2) + 30
-        text_instruction, text_instruction_rect = text_utils.get_centered_message("Press any key to start", height=pos_y)
+        pos_y = (SCREEN_HEIGHT // 2) + 30
+
+        game_over_message = "Press any key to start"
+        text_instruction, text_instruction_rect = text_utils.get_centered_message(game_over_message, height=pos_y)
 
         self.screen.blit(text_instruction, text_instruction_rect)
 
-        self.screen.blit(RUNNING[0], ((SCREEN_WIDTH//2), pos_y-150))
-        # if self.death_count == 5:
-        #     text_game_over, text_game_over_rect = text_utils.get_centered_message("Game Over, please Press any key to "
-        #                                                                           "restart", font_size=30)
-        #
-        #     self.screen.blit(text_game_over, text_game_over_rect)
+        self.screen.blit(RUNNING[0], (((SCREEN_WIDTH // 2) - 45), pos_y - 150))
 
+    def lives_remain(self):
+        die_message = "5 DIES = GAME OVER"
+        die_inst, die_inst_rect = text_utils.get_centered_message(die_message, 174, 40)
+        self.screen.blit(die_inst, die_inst_rect)
+
+        show_dies = "DIES : "
+        die_inst_2, die_inst_rect_2 = text_utils.get_centered_message((show_dies + str(self.death_count)), 100, 80)
+        self.screen.blit(die_inst_2, die_inst_rect_2)
+
+    def play_music(self):
+        if self.music == 0:
+            pygame.mixer.music.load("assets/sounds/OST-23.mp3")
+            pygame.mixer.music.play(-1)
+            pygame.mixer.music.set_volume(0.15)
+        elif self.music == 1:
+            pygame.mixer.music.load("assets/sounds/01-Running-About.mp3")
+            pygame.mixer.music.play(-1)
+            pygame.mixer.music.set_volume(0.5)
+            if self.death_count == 5:
+                pygame.mixer.music.stop()

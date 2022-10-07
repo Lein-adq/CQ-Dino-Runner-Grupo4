@@ -1,6 +1,6 @@
 import pygame
 from pygame.sprite import (Sprite)
-from dino_runner.utils.constants import RUNNING, JUMPING, DUCKING
+from dino_runner.utils.constants import RUNNING, JUMPING, DUCKING, JUMP_SOUND
 
 
 class Dinosaur(Sprite):
@@ -23,6 +23,7 @@ class Dinosaur(Sprite):
         self.dino_jump = False
         self.dino_duck = False
         self.dino_step = 0
+        self.jump_sound = JUMP_SOUND
 
     def update(self, userInput):
         if self.dino_run:
@@ -36,6 +37,7 @@ class Dinosaur(Sprite):
             self.dino_run = False
             self.dino_jump = True
             self.dino_duck = False
+            self.jump_sound.play()
         elif userInput[pygame.K_DOWN] and not self.dino_jump:
             self.dino_duck = True
             self.dino_jump = False

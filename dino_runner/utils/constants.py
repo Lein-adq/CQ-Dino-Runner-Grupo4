@@ -1,6 +1,9 @@
 import pygame
 import os
 
+pygame.init()
+pygame.mixer.init()
+
 # Global Constants
 TITLE = "Chrome Dino Runner"
 SCREEN_HEIGHT = 600
@@ -70,3 +73,11 @@ BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
 DEFAULT_TYPE = "default"
+
+# Sounds
+
+JUMP_SOUND = pygame.mixer.Sound("assets/sounds/smb_jump-super.wav")
+
+HURT_SOUND = pygame.mixer.Sound("assets/sounds/hurt.wav")
+
+DEATH_SOUND = pygame.mixer.Sound("assets/sounds/gameover.wav")
