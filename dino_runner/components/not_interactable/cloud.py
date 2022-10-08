@@ -1,6 +1,6 @@
 import random
 from pygame.sprite import Sprite
-from dino_runner.utils.constants import CLOUD, SCREEN_WIDTH
+from utils.constants import CLOUD, SCREEN_WIDTH
 
 
 class Cloud(Sprite):

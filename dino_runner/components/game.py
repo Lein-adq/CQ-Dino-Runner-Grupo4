@@ -1,10 +1,10 @@
 import pygame
 
-from dino_runner.components.dinosaur import Dinosaur
-from dino_runner.components.not_interactable.cloud import Cloud
-from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
-from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, RUNNING
-from dino_runner.utils import text_utils
+from components.dinosaur import Dinosaur
+from components.not_interactable.cloud import Cloud
+from components.obstacles.obstacle_manager import ObstacleManager
+from utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, RUNNING
+from utils import text_utils
 
 
 class Game:

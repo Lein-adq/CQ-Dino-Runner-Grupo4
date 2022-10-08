@@ -1,8 +1,8 @@
 import pygame
 import random
-from dino_runner.components.obstacles.cactus import LargeCactus, SmallCactus
-from dino_runner.components.obstacles.bird import Bird
-from dino_runner.utils.constants import (
+from components.obstacles.cactus import LargeCactus, SmallCactus
+from components.obstacles.bird import Bird
+from utils.constants import (
     LARGE_CACTUS,
     SMALL_CACTUS,
     BIRD, HURT_SOUND, DEATH_SOUND

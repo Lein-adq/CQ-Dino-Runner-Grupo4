@@ -1,6 +1,6 @@
 import pygame
 from pygame.sprite import (Sprite)
-from dino_runner.utils.constants import RUNNING, JUMPING, DUCKING, JUMP_SOUND
+from utils.constants import RUNNING, JUMPING, DUCKING, JUMP_SOUND
 
 
 class Dinosaur(Sprite):
