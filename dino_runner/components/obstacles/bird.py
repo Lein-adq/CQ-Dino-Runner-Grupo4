@@ -2,7 +2,7 @@ from components.obstacles.obstacle import Obstacle
 
 
 class Bird(Obstacle):
-    def __init__(self, image, pos=250):
+    def __init__(self, image, pos):
         self.type = 0
         super().__init__(image, self.type)
         self.image_rect.y = pos

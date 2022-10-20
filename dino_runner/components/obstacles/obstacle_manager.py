@@ -16,6 +16,8 @@ class ObstacleManager:
         self.death_sound = DEATH_SOUND
 
     def update(self, game):
+        bird = Bird(BIRD, random.choice([200, 250, 300]))
+
         if len(self.obstacles) == 0:
             obstacle_app = random.randint(1, 3)
             if obstacle_app == 1:
@@ -23,7 +25,7 @@ class ObstacleManager:
             elif obstacle_app == 2:
                 self.obstacles.append(SmallCactus(SMALL_CACTUS))
             elif obstacle_app == 3:
-                self.obstacles.append(Bird(BIRD))
+                self.obstacles.append(bird)
 
         for obstacle in self.obstacles:
             obstacle.update(game.game_speed)
@@ -36,9 +38,11 @@ class ObstacleManager:
                 game.death_count += 1
                 self.obstacles.pop()
                 self.coll_sound.play(2)
+                self.coll_sound.set_volume(0.18)
                 if game.death_count == 5:
                     pygame.time.delay(500)
                     pygame.mixer.Sound.play(self.death_sound)
+                    pygame.mixer.Sound.set_volume(self.death_sound, 0.45)
                     game.playing = False
                     game.execute()
 

@@ -7,7 +7,7 @@ FONT_STYLE1 = "freesansbold.ttf"
 FONT_STYLE2 = "assets/fonts/pixelfont.ttf"
 
 
-def get_score_element(points, font=FONT_STYLE1):
+def get_score_element(points, font=FONT_STYLE2):
     font = pygame.font.Font(font, 22)
     text = font.render("Points : " + str(points), True, BLACK_COLOR)
     text_rect = text.get_rect()

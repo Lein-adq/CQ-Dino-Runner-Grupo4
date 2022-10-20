@@ -1,5 +1,5 @@
-import pygame
 import os
+import pygame
 
 pygame.init()
 pygame.mixer.init()
@@ -8,7 +8,7 @@ pygame.mixer.init()
 TITLE = "Chrome Dino Runner"
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
-FPS = 30
+FPS = 45
 IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
 # Assets Constants

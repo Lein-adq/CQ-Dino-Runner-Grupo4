@@ -20,7 +20,6 @@ class Game:
         self.dino = Dinosaur()
         self.obstacle_manager = ObstacleManager()
         self.cloud = Cloud()
-        # self.heart = Heart()
         self.game_speed = 15
         self.x_pos_bg = 0
         self.y_pos_bg = 380
@@ -79,7 +78,7 @@ class Game:
         self.points += 1
         if self.points % 100 == 0:
             self.game_speed += 1
-        text, text_rect = text_utils.get_score_element(self.points, "assets/fonts/pixelfont.ttf")
+        text, text_rect = text_utils.get_score_element(self.points)
         self.screen.blit(text, text_rect)
 
     def draw_background(self):
@@ -137,10 +136,10 @@ class Game:
         if self.music == 0:
             pygame.mixer.music.load("assets/sounds/OST-23.mp3")
             pygame.mixer.music.play(-1)
-            pygame.mixer.music.set_volume(0.15)
+            pygame.mixer.music.set_volume(0.25)
         elif self.music == 1:
             pygame.mixer.music.load("assets/sounds/01-Running-About.mp3")
             pygame.mixer.music.play(-1)
-            pygame.mixer.music.set_volume(0.5)
+            pygame.mixer.music.set_volume(0.7)
             if self.death_count == 5:
                 pygame.mixer.music.stop()
