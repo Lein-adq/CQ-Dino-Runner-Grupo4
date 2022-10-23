@@ -7,7 +7,7 @@ pygame.mixer.init()
 # Global Constants
 TITLE = "Chrome Dino Runner"
 SCREEN_HEIGHT = 600
-SCREEN_WIDTH = 1100
+SCREEN_WIDTH = 1000
 FPS = 45
 IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
@@ -74,7 +74,7 @@ HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
 DEFAULT_TYPE = "default"
 
-# Sounds
+# Sounds Constants
 
 JUMP_SOUND = pygame.mixer.Sound("assets/sounds/smb_jump-super.wav")
 

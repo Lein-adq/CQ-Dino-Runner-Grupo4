@@ -17,7 +17,6 @@ class ObstacleManager:
 
     def update(self, game):
         bird = Bird(BIRD, random.choice([200, 250, 300]))
-
         if len(self.obstacles) == 0:
             obstacle_app = random.randint(1, 3)
             if obstacle_app == 1:
@@ -34,7 +33,7 @@ class ObstacleManager:
                 self.obstacles.pop()
 
             if game.dino.dino_rect.colliderect(obstacle.image_rect):
-                pygame.time.delay(380)
+                pygame.time.delay(300)
                 game.death_count += 1
                 self.obstacles.pop()
                 self.coll_sound.play(2)

@@ -1,5 +1,6 @@
 import pygame
 
+from components.addittional_features.feature_manager import FeatureManager
 from components.dinosaur import Dinosaur
 from components.not_interactable.cloud import Cloud
 from components.obstacles.obstacle_manager import ObstacleManager
@@ -19,6 +20,7 @@ class Game:
         self.game_running = True
         self.dino = Dinosaur()
         self.obstacle_manager = ObstacleManager()
+        self.feature_manager = FeatureManager()
         self.cloud = Cloud()
         self.game_speed = 15
         self.x_pos_bg = 0
@@ -26,6 +28,13 @@ class Game:
         self.death_count = 0
         self.points = 0
         self.music = 0
+
+    def reset_attributes(self):
+        self.playing = True
+        self.death_count = 0
+        self.music = 1
+        self.points = 0
+        self.game_speed = 15
 
     def run(self):
         # Game loop: events - update - draw
@@ -38,28 +47,17 @@ class Game:
             self.score()
         pygame.quit()
 
-    def reset_attributes(self):
-        self.playing = True
-        self.death_count = 0
-        self.music = 1
-        self.points = 0
-        self.game_speed = 15
-
     def execute(self):
         self.play_music()
         while self.game_running:
             if not self.playing:
                 self.show_menu()
 
-    def events(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.playing = False
-
     def update(self):
         user_input = pygame.key.get_pressed()
         self.dino.update(user_input)
         self.obstacle_manager.update(self)
+        self.feature_manager.update(self)
         self.cloud.update(self)
 
     def draw(self):
@@ -70,6 +68,7 @@ class Game:
         self.lives_remain()
         self.dino.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
+        self.feature_manager.draw(self.screen)
         self.cloud.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
@@ -91,24 +90,12 @@ class Game:
         self.x_pos_bg -= self.game_speed
 
     def show_menu(self):
-
         self.screen.fill((255, 255, 255))
         self.show_menu_options()
 
         pygame.display.update()
 
         self.handle_events_menu()
-
-    def handle_events_menu(self):
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                self.run()
-            if event.type == pygame.QUIT:
-                self.game_running = False
-                self.playing = False
-                pygame.display.quit()
-                pygame.quit()
-                exit()
 
     def show_menu_options(self):
         message = "WELCOME TO DINO RUNNER GAME!!" if self.death_count <= 0 else "GAME OVER"
@@ -123,9 +110,30 @@ class Game:
 
         self.screen.blit(RUNNING[0], (((SCREEN_WIDTH // 2) - 45), pos_y - 150))
 
+    def handle_events_menu(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or (
+                    pygame.key.get_pressed()[pygame.K_ESCAPE]):  # Press Escape to quit the game
+                self.game_running = False
+                self.playing = False
+                pygame.quit()
+                pygame.display.quit()
+                exit()
+            if event.type == pygame.KEYDOWN:
+                self.run()
+
+    def events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or (pygame.key.get_pressed()[pygame.K_ESCAPE]):
+                self.game_running = False
+                self.playing = False
+                pygame.quit()
+                pygame.display.quit()
+                exit()
+
     def lives_remain(self):
         die_message = "5 DIES = GAME OVER"
-        die_inst, die_inst_rect = text_utils.get_centered_message(die_message, 174, 40)
+        die_inst, die_inst_rect = text_utils.get_centered_message(die_message, 168, 40)
         self.screen.blit(die_inst, die_inst_rect)
 
         show_dies = "DIES : "
@@ -143,3 +151,12 @@ class Game:
             pygame.mixer.music.set_volume(0.7)
             if self.death_count == 5:
                 pygame.mixer.music.stop()
+
+
+    def pause(self):
+        self.pause = True
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_c:
+                    self.pause = False
+
